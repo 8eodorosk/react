@@ -2,18 +2,28 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 class Contact extends Component {
-  // kai oi 2 einai swstoi oi typoi
-  // static propTypes = {
-  //     name: PropTypes.string.isRequired,
-  //     email: PropTypes.string.isRequired,
-  //     phone: PropTypes.string.isRequired
-  //   };
+  state = {
+    showContacInfo: true
+  };
+
+  onShowClick = e => {
+    this.setState({ showContacInfo: !this.state.showContacInfo });
+  };
 
   render() {
-    const { name, email, phone } = this.props;
+    const { name, email, phone } = this.props.contact;
     return (
       <div className="card card-body mb-3">
-        <h4>{name}</h4>
+        <h4>
+          {name}
+          <i
+            className="fas fa-sort-down"
+            // prepei na kanw to bind ama de xrisimopoiisw arrow function
+            // stis custom methodous poy ftiaxnw
+            // onClick={this.onShowClick.bind(this)}
+            onClick={this.onShowClick}
+          />
+        </h4>
         <ul className="list-group">
           <li className="list-group-item">Email: {email}</li>
           <li className="list-group-item">Phone: {phone}</li>
@@ -24,9 +34,7 @@ class Contact extends Component {
 }
 
 Contact.propTypes = {
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired
+  contact: PropTypes.object.isRequired
 };
 
 export default Contact;
