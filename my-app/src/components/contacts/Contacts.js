@@ -7,6 +7,7 @@ class Contacts extends Component {
   render() {
     return (
       <Consumer>
+        {/* to value erxetai apo ton consumer */}
         {value => {
           const { contacts } = value;
           return (
@@ -14,6 +15,7 @@ class Contacts extends Component {
               <h1 className="display-4 mb-2"><span className="text-danger">Contact</span> List</h1>
               {contacts.map((contact) => (
                 <Contact
+                  // pername ta props sto contact component to opoio thelei ena key gia kapoio logo 
                   key={contact.id}
                   contact={contact}
                 />
