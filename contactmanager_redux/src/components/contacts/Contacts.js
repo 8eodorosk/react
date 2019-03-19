@@ -30,6 +30,12 @@ Contacts.propTypes = {
   getContacts: PropTypes.func.isRequired
 }
 
+// const mapStateToProps = (state) => {
+//   return {
+//     contacts: state.contact.contacts
+//   }
+// };
+//to panw me to katw einai equivalent
 const mapStateToProps = (state) => ({
   contacts: state.contact.contacts
 });

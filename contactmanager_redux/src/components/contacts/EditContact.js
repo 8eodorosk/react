@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
 import TextInputGroup from '../layout/TextInputGroup';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getContact, updateContact } from '../../actions/contactActions';
+
 
 class EditContact extends Component {
   state = {
     name: '',
     email: '',
     phone: '',
-    errors: {}
+    errors: {},
+    prevProps: {}
   };
+
+  // afouxekinisei ananewnei to state
+  componentWillReceiveProps(prevProps) {
+    console.log('4 editContact.js', this.state);
+    const { name, email, phone } = prevProps.contact;
+    this.setState({ name, email, phone });
+  }
+
+  // trexei me to pou xekinisei to component
+  componentDidMount() {
+    console.log('2 editContact.js', this.state);
+    const { id } = this.props.match.params;
+    this.props.getContact(id);
+    console.log('3 editContact.js', this.state);
+  }
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -30,15 +50,19 @@ class EditContact extends Component {
       return;
     }
 
+
+    const { id } = this.props.match.params;
+
     const updContact = {
+      id,
       name,
       email,
       phone
     };
 
-    const { id } = this.props.match.params;
-
     //// UPDATE CONTACT ////
+
+    this.props.updateContact(updContact);
 
     // Clear State
     this.setState({
@@ -54,6 +78,7 @@ class EditContact extends Component {
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
+    console.log('1 editContact.js', this.state);
     const { name, email, phone, errors } = this.state;
 
     return (
@@ -98,4 +123,13 @@ class EditContact extends Component {
   }
 }
 
-export default EditContact;
+EditContact.propTypes = {
+  contact: PropTypes.object.isRequired,
+  getContact: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  contact: state.contact.contact
+})
+
+export default connect(mapStateToProps, { getContact, updateContact })(EditContact);
